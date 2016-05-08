@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "TAB" + (position + 1);
+            return "TAB" + position;
         }
     }
 
@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     try {
-                        // 2秒
-                        Thread.sleep(1000 * 2);
+                        // 1秒
+                        Thread.sleep(1000 * 1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         private List<String> createData(int position) {
             List<String> data = new ArrayList<>();
             for (int i = 0; i < 20; i++) {
-                data.add(position + " " + String.valueOf(i));
+                data.add("TAB" + position + ":" + String.valueOf(i));
             }
             return data;
         }
