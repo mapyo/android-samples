@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private class MainPagerAdapter extends FragmentPagerAdapter {
-        private final String[] mPageTitles = {"tab1", "tab2"};
+        private static final int TAB_COUNT = 2;
 
         public MainPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -55,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return mPageTitles.length;
+            return TAB_COUNT;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mPageTitles[position];
+            return "TAB" + (position + 1);
         }
     }
 
