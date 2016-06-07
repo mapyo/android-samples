@@ -3,5 +3,5 @@
 
 ## [TabLayout](./TabLayout)
 
-![TabLayout](./gif/tablayout.gif)
+<img src="/gif/tablayout.gif" width="30%">
 
