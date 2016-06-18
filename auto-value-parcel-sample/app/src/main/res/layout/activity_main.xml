@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mapyo.autovalueparcelsample.MainActivity">
+
+    <TextView
+        android:id="@+id/first_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="first name" />
+
+    <EditText
+        android:id="@+id/first_name_text"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/first_name_label"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/first_name_label"
+        android:background="@android:color/white" />
+
+    <TextView
+        android:id="@+id/last_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/first_name_label"
+        android:layout_marginTop="20dp"
+        android:text="first name" />
+
+    <EditText
+        android:id="@+id/last_name_text"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/first_name_text"
+        android:layout_alignTop="@id/last_name_label"
+        android:background="@android:color/white" />
+
+    <TextView
+        android:id="@+id/email_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/last_name_label"
+        android:layout_marginTop="20dp"
+        android:text="email" />
+
+    <EditText
+        android:id="@+id/email_text"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/first_name_text"
+        android:layout_alignTop="@id/email_label"
+        android:background="@android:color/white" />
+
+
+    <Button
+        android:id="@+id/confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/email_label"
+        android:layout_marginTop="30dp"
+        android:text="confirm" />
+</RelativeLayout>
