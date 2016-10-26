@@ -3,9 +3,11 @@ package com.mapyo.recyclerviewgridlayoutdrag;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -28,10 +30,48 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.sample4,
                 R.drawable.sample5);
 
-        SampleImageAdapter adapter = new SampleImageAdapter(this, imageResList);
+        final SampleImageAdapter adapter = new SampleImageAdapter(this, imageResList);
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         binding.recyclerView.setHasFixedSize(true);
+
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG, ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT);
+            }
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                final int fromPos = viewHolder.getAdapterPosition();
+                final int toPos = target.getAdapterPosition();
+                adapter.notifyItemMoved(fromPos, toPos);
+                return true;
+            }
+
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                super.onSelectedChanged(viewHolder, actionState);
+                if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                    // todo ドラッグ開始とわかる何かを入れる
+                }
+            }
+
+            @Override
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                // todo 移動が終わった時の処理。APIを叩いたり
+            }
+
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
+            }
+
+
+        });
+        helper.attachToRecyclerView(binding.recyclerView);
+        binding.recyclerView.addItemDecoration(helper);
+
     }
 
     class SampleImageAdapter extends RecyclerView.Adapter<SampleImageAdapter.ViewHolder> {
