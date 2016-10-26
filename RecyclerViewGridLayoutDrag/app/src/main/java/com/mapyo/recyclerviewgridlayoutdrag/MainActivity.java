@@ -1,9 +1,10 @@
 package com.mapyo.recyclerviewgridlayoutdrag;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,13 +54,18 @@ public class MainActivity extends AppCompatActivity {
             public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
                 super.onSelectedChanged(viewHolder, actionState);
                 if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-                    // todo ドラッグ開始とわかる何かを入れる
+                    AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(MainActivity.this, R.animator.scale_up);
+                    set.setTarget(viewHolder.itemView);
+                    set.start();
                 }
             }
 
             @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 // todo 移動が終わった時の処理。APIを叩いたり
+                AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(MainActivity.this, R.animator.scale_down);
+                set.setTarget(viewHolder.itemView);
+                set.start();
             }
 
 
