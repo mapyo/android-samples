@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
                 // todo 移動が終わった時の処理。APIを叩いたり
                 AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(MainActivity.this, R.animator.scale_down);
                 set.setTarget(viewHolder.itemView);
