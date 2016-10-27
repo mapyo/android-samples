@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         helper.attachToRecyclerView(binding.recyclerView);
         binding.recyclerView.addItemDecoration(helper);
 
+        binding.recyclerView.bringToFront();
+
     }
 
     class SampleImageAdapter extends RecyclerView.Adapter<SampleImageAdapter.ViewHolder> {
