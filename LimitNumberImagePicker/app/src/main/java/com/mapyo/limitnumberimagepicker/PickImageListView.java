@@ -41,7 +41,6 @@ public class PickImageListView extends RecyclerView {
     }
 
     class PickImageAdapter extends RecyclerView.Adapter<PickImageAdapter.ViewHolder> {
-        // todo 不要になったら消す
         private Context context;
         private Cursor cursor;
 
