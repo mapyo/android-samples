@@ -20,7 +20,6 @@ import com.squareup.picasso.Picasso;
 public class ImagePickActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String LIMIT_NUMBER_IMAGE = "limit_number_image";
     private static final int FETCH_IMAGE_LIST_LOADER_ID = 1;
-    private static final String[] PROJECTION = {MediaStore.MediaColumns.DATA};
 
     private static final String ORDER_BY = MediaStore.Images.Media._ID + " DESC";
     private ActivityImagePickBinding binding;
