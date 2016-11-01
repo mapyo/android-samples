@@ -47,7 +47,9 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         switch (loader.getId()) {
             case LOADER_ID_FETCH_IMAGE_LIST:
+                binding.pickImageListView.setCursor(cursor);
                 showImages(cursor);
+
         }
     }
 
@@ -66,7 +68,7 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
             i++;
         } while (cursor.moveToNext());
 
-        cursor.close();
+//        cursor.close();
     }
 
     private void setImage(Uri uri) {
