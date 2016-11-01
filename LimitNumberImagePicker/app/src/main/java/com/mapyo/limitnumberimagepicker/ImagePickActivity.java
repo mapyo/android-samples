@@ -31,7 +31,7 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
     }
 
     @Override
-    public Loader onCreateLoader(int id, Bundle args) {
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case LOADER_ID_FETCH_IMAGE_LIST:
                 return new CursorLoader(ImagePickActivity.this, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, ORDER_BY);
