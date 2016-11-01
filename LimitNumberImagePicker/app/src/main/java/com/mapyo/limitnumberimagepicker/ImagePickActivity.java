@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 
 public class ImagePickActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String LIMIT_NUMBER_IMAGE = "limit_number_image";
-    private static final int FETCH_IMAGE_LIST_LOADER_ID = 1;
+    private static final int LOADER_ID_FETCH_IMAGE_LIST = 1;
 
     private static final String ORDER_BY = MediaStore.Images.Media._ID + " DESC";
     private ActivityImagePickBinding binding;
@@ -31,16 +31,28 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
 
         // 画像一覧をとってくる
         // cursorを使う
-        getSupportLoaderManager().initLoader(FETCH_IMAGE_LIST_LOADER_ID, null, this);
+        getSupportLoaderManager().initLoader(LOADER_ID_FETCH_IMAGE_LIST, null, this);
     }
 
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(ImagePickActivity.this, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, ORDER_BY);
+        switch (id) {
+            case LOADER_ID_FETCH_IMAGE_LIST:
+                return new CursorLoader(ImagePickActivity.this, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, ORDER_BY);
+            default:
+                return null;
+        }
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        switch (loader.getId()) {
+            case LOADER_ID_FETCH_IMAGE_LIST:
+                showImages(cursor);
+        }
+    }
+
+    private void showImages(Cursor cursor) {
         cursor.moveToFirst();
         do {
             for (int i = 0; i < cursor.getColumnCount(); i++) {
@@ -53,6 +65,8 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
                 }
             }
         } while (cursor.moveToNext());
+
+        cursor.close();
     }
 
     private void setImage(Uri uri) {
