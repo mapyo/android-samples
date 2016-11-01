@@ -11,6 +11,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.squareup.picasso.Picasso;
 
 public class PickImageListView extends RecyclerView {
     static final int MAX_SPAN_COUNT = 3;
@@ -50,6 +53,7 @@ public class PickImageListView extends RecyclerView {
             // todo cursorをクローズする処理を書く
             // ref. https://gist.github.com/skyfishjy/443b7448f59be978bc59#file-cursorrecyclerviewadapter-java-L104
             this.cursor = cursor;
+            notifyItemInserted(cursor.getCount() - 1);
         }
 
         private Uri getItemUri(int position) {
@@ -67,12 +71,13 @@ public class PickImageListView extends RecyclerView {
             ImageView imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            return new ViewHolder(imageView);
+            int size = parent.getWidth()  / MAX_SPAN_COUNT;
+            return new ViewHolder(imageView, size);
         }
 
         @Override
         public void onBindViewHolder(PickImageAdapter.ViewHolder holder, int position) {
-            holder.imageView.setImageURI(getItemUri(position));
+            holder.setUp(getItemUri(position));
         }
 
         @Override
@@ -85,11 +90,29 @@ public class PickImageListView extends RecyclerView {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            ImageView imageView;
+            private ImageView imageView;
+            private int size;
 
-            ViewHolder(View view) {
+            ViewHolder(View view, int size) {
                 super(view);
                 imageView = (ImageView) view;
+                this.size = size;
+            }
+
+            public void setUp(Uri itemUri) {
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+
+                lp.width = size;
+                lp.height = size;
+                imageView.setLayoutParams(lp);
+
+                Picasso.with(getContext())
+                        .load(itemUri)
+                        .fit()
+                        .centerCrop()
+                        .into(imageView);
             }
         }
     }
