@@ -1,11 +1,9 @@
 package com.mapyo.limitnumberimagepicker;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.LoaderManager;
@@ -14,7 +12,6 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 
 import com.mapyo.limitnumberimagepicker.databinding.ActivityImagePickBinding;
-import com.squareup.picasso.Picasso;
 
 public class ImagePickActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String LIMIT_NUMBER_IMAGE = "limit_number_image";
@@ -48,33 +45,7 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
         switch (loader.getId()) {
             case LOADER_ID_FETCH_IMAGE_LIST:
                 binding.pickImageListView.setCursor(cursor);
-                showImages(cursor);
-
         }
-    }
-
-    private void showImages(Cursor cursor) {
-        int i = 0;
-        cursor.moveToFirst();
-        do {
-            int fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID);
-            long id = cursor.getLong(fieldIndex);
-            Uri uri = ContentUris.withAppendedId( MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
-            L.d(uri.toString());
-            if (i == 1) {
-                setImage(uri);
-            }
-
-            i++;
-        } while (cursor.moveToNext());
-
-//        cursor.close();
-    }
-
-    private void setImage(Uri uri) {
-        Picasso.with(this)
-                .load(uri)
-                .into(binding.image);
     }
 
     @Override
