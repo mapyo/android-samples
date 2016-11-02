@@ -10,10 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.squareup.picasso.Picasso;
+import java.util.ArrayList;
 
 public class PickImageListView extends RecyclerView {
     static final int MAX_SPAN_COUNT = 3;
@@ -36,13 +34,15 @@ public class PickImageListView extends RecyclerView {
         setHasFixedSize(false);
     }
 
-    public void setCursor(Cursor cursor) {
+    public void setUp(Cursor cursor, int limitImageNumber) {
         adapter.setCursor(cursor);
+        adapter.setLimitImageNumber(limitImageNumber);
     }
 
     class PickImageAdapter extends RecyclerView.Adapter<PickImageAdapter.ViewHolder> {
         private Context context;
         private Cursor cursor;
+        private int limitImageNumber;
 
         private PickImageAdapter(Context context) {
             this.context = context;
@@ -75,11 +75,10 @@ public class PickImageListView extends RecyclerView {
 
         @Override
         public PickImageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            ImageView imageView = new ImageView(context);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
+            PickImageView pickImageView = new PickImageView(context);
             int size = parent.getWidth()  / MAX_SPAN_COUNT;
-            return new ViewHolder(imageView, size);
+
+            return new ViewHolder(pickImageView, size, limitImageNumber);
         }
 
         @Override
@@ -96,30 +95,24 @@ public class PickImageListView extends RecyclerView {
             return 0;
         }
 
+        private void setLimitImageNumber(int limitImageNumber) {
+            this.limitImageNumber = limitImageNumber;
+        }
+
         class ViewHolder extends RecyclerView.ViewHolder {
-            private ImageView imageView;
+            private final int limitImageNumber;
             private int size;
 
-            ViewHolder(View view, int size) {
+            ViewHolder(View view, int size, int limitImageNumber) {
                 super(view);
-                imageView = (ImageView) view;
                 this.size = size;
+                this.limitImageNumber = limitImageNumber;
             }
 
             public void setUp(Uri itemUri) {
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
-
-                lp.width = size;
-                lp.height = size;
-                imageView.setLayoutParams(lp);
-
-                Picasso.with(getContext())
-                        .load(itemUri)
-                        .fit()
-                        .centerCrop()
-                        .into(imageView);
+                PickImageView pickImageView = (PickImageView) itemView;
+                // todo 一旦初期化した配列を渡す
+                pickImageView.setUp(itemUri, size, limitImageNumber, new ArrayList<Uri>());
             }
         }
     }

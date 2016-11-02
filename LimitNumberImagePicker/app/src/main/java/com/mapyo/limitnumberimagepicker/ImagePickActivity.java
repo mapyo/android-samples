@@ -20,6 +20,8 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
     private static final String ORDER_BY = MediaStore.Images.Media._ID + " DESC";
     private ActivityImagePickBinding binding;
 
+    private int limitImageNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,7 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
         // 画像一覧をとってくる
         // cursorを使う
         getSupportLoaderManager().initLoader(LOADER_ID_FETCH_IMAGE_LIST, null, this);
+        limitImageNumber = getIntent().getExtras().getInt(LIMIT_NUMBER_IMAGE, 0);
     }
 
     @Override
@@ -44,7 +47,9 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         switch (loader.getId()) {
             case LOADER_ID_FETCH_IMAGE_LIST:
-                binding.pickImageListView.setCursor(cursor);
+                if (cursor != null) {
+                    binding.pickImageListView.setUp(cursor, limitImageNumber);
+                }
         }
     }
 
