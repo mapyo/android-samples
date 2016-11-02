@@ -5,15 +5,18 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.UiThread;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.mapyo.limitnumberimagepicker.databinding.ViewPickImageViewBinding;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -34,6 +37,24 @@ public class PickImageView extends RelativeLayout {
     public PickImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.view_pick_image_view, this, true);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        EventBus.getDefault().unregister(this);
+        super.onDetachedFromWindow();
+    }
+
+    @Subscribe
+    @UiThread
+    public void onEvent(PickImageRefreshEvent event) {
+        refreshSelectedVisibility(imageUri, event.getPickImageUriList());
     }
 
     public void setUp(Uri imageUri, int size, int maxImageNumber, @NonNull List<Uri> selectedImageList) {
@@ -72,8 +93,8 @@ public class PickImageView extends RelativeLayout {
     }
 
     private void selectImage(boolean selected) {
-        // todo eventbuns
-        Toast.makeText(getContext(), "hello", Toast.LENGTH_SHORT).show();
+        PickImageEvent event = new PickImageEvent(imageUri, selected);
+        EventBus.getDefault().post(event);
     }
 
     private void setUpSelectedImage(int selectedPosition) {

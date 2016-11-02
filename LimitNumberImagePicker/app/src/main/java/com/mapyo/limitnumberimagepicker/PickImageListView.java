@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PickImageListView extends RecyclerView {
     static final int MAX_SPAN_COUNT = 3;
@@ -44,8 +45,11 @@ public class PickImageListView extends RecyclerView {
         private Cursor cursor;
         private int limitImageNumber;
 
+        private List<Uri> pickImageUriList;
+
         private PickImageAdapter(Context context) {
             this.context = context;
+            pickImageUriList = new ArrayList<>();
         }
 
         private void setCursor(Cursor cursor) {
@@ -83,7 +87,7 @@ public class PickImageListView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(PickImageAdapter.ViewHolder holder, int position) {
-            holder.setUp(getItemUri(position));
+            holder.setUp(getItemUri(position), pickImageUriList);
         }
 
         @Override
@@ -109,10 +113,9 @@ public class PickImageListView extends RecyclerView {
                 this.limitImageNumber = limitImageNumber;
             }
 
-            public void setUp(Uri itemUri) {
+            public void setUp(Uri itemUri, List<Uri> pickImageUriList) {
                 PickImageView pickImageView = (PickImageView) itemView;
-                // todo 一旦初期化した配列を渡す
-                pickImageView.setUp(itemUri, size, limitImageNumber, new ArrayList<Uri>());
+                pickImageView.setUp(itemUri, size, limitImageNumber, pickImageUriList);
             }
         }
     }
