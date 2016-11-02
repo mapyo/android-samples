@@ -49,10 +49,18 @@ public class PickImageListView extends RecyclerView {
         }
 
         private void setCursor(Cursor cursor) {
-            // todo cursorをクローズする処理を書く
-            // ref. https://gist.github.com/skyfishjy/443b7448f59be978bc59#file-cursorrecyclerviewadapter-java-L104
+            if (this.cursor == cursor) {
+                return;
+            }
+
+            if (this.cursor != null) {
+                this.cursor.close();
+            }
+
             this.cursor = cursor;
-            notifyItemInserted(cursor.getCount() - 1);
+
+            notifyDataSetChanged();
+
         }
 
         private Uri getItemUri(int position) {
