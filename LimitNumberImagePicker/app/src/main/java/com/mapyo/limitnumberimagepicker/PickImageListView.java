@@ -136,7 +136,9 @@ public class PickImageListView extends RecyclerView {
         }
 
         private void addPickImageUriList(Uri imageUri) {
-            pickImageUriList.add(imageUri);
+            if (pickImageUriList.size() < limitImageNumber) {
+                pickImageUriList.add(imageUri);
+            }
         }
 
         private void removePickImageUriList(Uri imageUri) {
