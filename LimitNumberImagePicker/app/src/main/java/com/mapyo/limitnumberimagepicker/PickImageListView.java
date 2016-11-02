@@ -5,11 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.UiThread;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,30 @@ public class PickImageListView extends RecyclerView {
         setAdapter(adapter);
         setLayoutManager(new GridLayoutManager(context, MAX_SPAN_COUNT));
         setHasFixedSize(false);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        EventBus.getDefault().unregister(this);
+        super.onDetachedFromWindow();
+    }
+    @Subscribe
+    @UiThread
+    public void onEvent(PickImageEvent event) {
+        if (event.isSelected()) {
+            adapter.addPickImageUriList(event.getImageUri());
+        } else {
+            adapter.removePickImageUriList(event.getImageUri());
+        }
+
+        PickImageRefreshEvent postEvent = new PickImageRefreshEvent(adapter.getPickImageUriList());
+        EventBus.getDefault().post(postEvent);
     }
 
     public void setUp(Cursor cursor, int limitImageNumber) {
@@ -101,6 +129,18 @@ public class PickImageListView extends RecyclerView {
 
         private void setLimitImageNumber(int limitImageNumber) {
             this.limitImageNumber = limitImageNumber;
+        }
+
+        private List<Uri> getPickImageUriList() {
+            return pickImageUriList;
+        }
+
+        private void addPickImageUriList(Uri imageUri) {
+            pickImageUriList.add(imageUri);
+        }
+
+        private void removePickImageUriList(Uri imageUri) {
+            pickImageUriList.remove(imageUri);
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {

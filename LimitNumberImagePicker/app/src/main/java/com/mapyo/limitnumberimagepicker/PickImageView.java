@@ -74,7 +74,7 @@ public class PickImageView extends RelativeLayout {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean selected = binding.selectedImageCount.getVisibility() == VISIBLE;
+                boolean selected = binding.selectedImageCount.getVisibility() != VISIBLE;
                 selectImage(selected);
             }
         });
@@ -99,7 +99,8 @@ public class PickImageView extends RelativeLayout {
 
     private void setUpSelectedImage(int selectedPosition) {
         binding.selectedImageCount.setVisibility(VISIBLE);
-        binding.selectedImageCount.setText(selectedPosition);
+        int displayPosition = selectedPosition + 1;
+        binding.selectedImageCount.setText(String.valueOf(displayPosition));
 
         binding.pickImage.setAlpha(1f);
     }
