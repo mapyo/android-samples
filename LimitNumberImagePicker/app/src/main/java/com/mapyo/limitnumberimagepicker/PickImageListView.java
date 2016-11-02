@@ -59,8 +59,9 @@ public class PickImageListView extends RecyclerView {
             adapter.removePickImageUriList(event.getImageUri());
         }
 
-        PickImageRefreshEvent postEvent = new PickImageRefreshEvent(adapter.getPickImageUriList());
-        EventBus.getDefault().post(postEvent);
+//        PickImageRefreshEvent postEvent = new PickImageRefreshEvent(adapter.getPickImageUriList());
+//        EventBus.getDefault().post(postEvent);
+        adapter.refresh();
     }
 
     public void setUp(Cursor cursor, int limitImageNumber) {
@@ -143,6 +144,10 @@ public class PickImageListView extends RecyclerView {
 
         private void removePickImageUriList(Uri imageUri) {
             pickImageUriList.remove(imageUri);
+        }
+
+        private void refresh() {
+            notifyDataSetChanged();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
