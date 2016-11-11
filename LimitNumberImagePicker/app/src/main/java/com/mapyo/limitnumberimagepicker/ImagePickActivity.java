@@ -57,15 +57,15 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
     }
 
     public static class IntentBuilder {
-        private Intent mIntent;
+        private Intent intent;
 
         IntentBuilder(Context context, int limitNumberImage) {
-            mIntent = new Intent(context, ImagePickActivity.class);
-            mIntent.putExtra(LIMIT_NUMBER_IMAGE, limitNumberImage);
+            intent = new Intent(context, ImagePickActivity.class);
+            intent.putExtra(LIMIT_NUMBER_IMAGE, limitNumberImage);
         }
 
         Intent build() {
-            return mIntent;
+            return intent;
         }
     }
 }

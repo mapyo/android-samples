@@ -33,7 +33,7 @@ public class PickImageListView extends RecyclerView {
 
     public PickImageListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        adapter = new PickImageAdapter(getContext());
+        adapter = new PickImageAdapter(context);
         setAdapter(adapter);
         setLayoutManager(new GridLayoutManager(context, MAX_SPAN_COUNT));
         setHasFixedSize(true);
