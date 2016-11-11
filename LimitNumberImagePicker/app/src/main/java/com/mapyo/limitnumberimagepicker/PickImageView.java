@@ -115,4 +115,3 @@ public class PickImageView extends RelativeLayout {
         }
     }
 }
-

@@ -27,9 +27,7 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_image_pick);
 
-        // 画像一覧をとってくる
-        // cursorを使う
-        getSupportLoaderManager().initLoader(LOADER_ID_FETCH_IMAGE_LIST, null, this);
+        getSupportLoaderManager().restartLoader(LOADER_ID_FETCH_IMAGE_LIST, null, this);
         limitImageNumber = getIntent().getExtras().getInt(LIMIT_NUMBER_IMAGE, 0);
     }
 
