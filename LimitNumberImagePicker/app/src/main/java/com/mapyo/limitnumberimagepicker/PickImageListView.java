@@ -36,7 +36,7 @@ public class PickImageListView extends RecyclerView {
         adapter = new PickImageAdapter(getContext());
         setAdapter(adapter);
         setLayoutManager(new GridLayoutManager(context, MAX_SPAN_COUNT));
-        setHasFixedSize(false);
+        setHasFixedSize(true);
     }
 
     @Override
@@ -59,8 +59,6 @@ public class PickImageListView extends RecyclerView {
             adapter.removePickImageUriList(event.getImageUri());
         }
 
-//        PickImageRefreshEvent postEvent = new PickImageRefreshEvent(adapter.getPickImageUriList());
-//        EventBus.getDefault().post(postEvent);
         adapter.refresh();
     }
 
