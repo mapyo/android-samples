@@ -13,7 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.mapyo.limitnumberimagepicker.databinding.ActivityImagePickBinding;
 
-public class ImagePickActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ImagePickerActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String LIMIT_NUMBER_IMAGE = "limit_number_image";
     private static final int LOADER_ID_FETCH_IMAGE_LIST = 1;
 
@@ -35,7 +35,7 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case LOADER_ID_FETCH_IMAGE_LIST:
-                return new CursorLoader(ImagePickActivity.this, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, ORDER_BY);
+                return new CursorLoader(ImagePickerActivity.this, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, ORDER_BY);
             default:
                 return null;
         }
@@ -60,7 +60,7 @@ public class ImagePickActivity extends AppCompatActivity implements LoaderManage
         private Intent intent;
 
         IntentBuilder(Context context, int limitNumberImage) {
-            intent = new Intent(context, ImagePickActivity.class);
+            intent = new Intent(context, ImagePickerActivity.class);
             intent.putExtra(LIMIT_NUMBER_IMAGE, limitNumberImage);
         }
 

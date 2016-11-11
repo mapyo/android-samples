@@ -6,7 +6,7 @@
         android:id="@+id/activity_image_pick"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.mapyo.limitnumberimagepicker.ImagePickActivity">
+        tools:context="com.mapyo.limitnumberimagepicker.ImagePickerActivity">
 
         <com.mapyo.limitnumberimagepicker.PickImageListView
             android:id="@+id/pick_image_list_view"

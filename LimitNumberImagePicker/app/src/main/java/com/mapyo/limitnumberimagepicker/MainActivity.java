@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int limitNumberImage = Integer.valueOf(binding.numberOfImage.getText().toString());
-                Intent intent = new ImagePickActivity.IntentBuilder(MainActivity.this, limitNumberImage).build();
+                Intent intent = new ImagePickerActivity.IntentBuilder(MainActivity.this, limitNumberImage).build();
                 startActivity(intent);
             }
         });
