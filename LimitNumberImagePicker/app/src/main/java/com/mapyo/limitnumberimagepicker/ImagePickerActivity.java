@@ -10,6 +10,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 
 import com.mapyo.limitnumberimagepicker.databinding.ActivityImagePickBinding;
 
@@ -54,6 +55,12 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
     @Override
     public void onLoaderReset(Loader loader) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     public static class IntentBuilder {
