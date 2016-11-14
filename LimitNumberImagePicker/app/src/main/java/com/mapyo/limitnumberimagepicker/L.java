@@ -5,11 +5,6 @@ import android.util.Log;
 import java.util.regex.Pattern;
 
 public class L {
-    /**
-     * デバック用ログを出力する。 本番リリース時は出力されない。
-     *
-     * @param msg 出力するメッセージ
-     */
     public static void d(String msg) {
         if (!BuildConfig.DEBUG) return;
         Log.d(getTag(), msg);
