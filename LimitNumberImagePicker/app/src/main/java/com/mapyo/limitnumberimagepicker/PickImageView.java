@@ -5,7 +5,6 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.annotation.UiThread;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.mapyo.limitnumberimagepicker.databinding.ViewPickImageViewBinding;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -49,12 +47,6 @@ public class PickImageView extends RelativeLayout {
     protected void onDetachedFromWindow() {
         EventBus.getDefault().unregister(this);
         super.onDetachedFromWindow();
-    }
-
-    @Subscribe
-    @UiThread
-    public void onEvent(PickImageRefreshEvent event) {
-        refreshSelectedVisibility(imageUri, event.getPickImageUriList());
     }
 
     public void setUp(Uri imageUri, int size, int maxImageNumber, @NonNull List<Uri> selectedImageList) {
