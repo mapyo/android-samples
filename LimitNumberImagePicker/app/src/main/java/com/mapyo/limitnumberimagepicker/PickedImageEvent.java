@@ -4,10 +4,10 @@ import android.net.Uri;
 
 import java.util.List;
 
-public class SelectedImageEvent {
+public class PickedImageEvent {
     private List<Uri> pickImageUriList;
 
-    public SelectedImageEvent(List<Uri> pickImageUriList) {
+    public PickedImageEvent(List<Uri> pickImageUriList) {
         this.pickImageUriList = pickImageUriList;
     }
 
