@@ -37,18 +37,6 @@ public class PickImageView extends RelativeLayout {
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.view_pick_image_view, this, true);
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        EventBus.getDefault().unregister(this);
-        super.onDetachedFromWindow();
-    }
-
     public void setUp(Uri imageUri, int size, int maxImageNumber, @NonNull List<Uri> selectedImageList) {
         this.imageUri = imageUri;
         this.maxImageNumber = maxImageNumber;
