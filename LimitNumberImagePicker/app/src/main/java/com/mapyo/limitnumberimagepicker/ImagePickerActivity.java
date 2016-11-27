@@ -9,8 +9,11 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.mapyo.limitnumberimagepicker.databinding.ActivityImagePickBinding;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class ImagePickerActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String LIMIT_NUMBER_IMAGE = "limit_number_image";
@@ -60,6 +63,24 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_finish:
+                postPickedImageEvent();
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void postPickedImageEvent() {
+        PickedImageEvent event =
+                new PickedImageEvent(binding.pickImageListView.getPickImageUriList());
+        EventBus.getDefault().post(event);
     }
 
     public static class IntentBuilder {

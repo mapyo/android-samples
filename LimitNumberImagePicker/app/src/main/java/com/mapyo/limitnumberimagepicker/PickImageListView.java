@@ -50,6 +50,7 @@ public class PickImageListView extends RecyclerView {
         EventBus.getDefault().unregister(this);
         super.onDetachedFromWindow();
     }
+
     @Subscribe
     @UiThread
     public void onEvent(PickImageEvent event) {
@@ -65,6 +66,10 @@ public class PickImageListView extends RecyclerView {
     public void setUp(Cursor cursor, int limitImageNumber) {
         adapter.setCursor(cursor);
         adapter.setLimitImageNumber(limitImageNumber);
+    }
+
+    public List<Uri> getPickImageUriList() {
+        return adapter.getPickImageUriList();
     }
 
     class PickImageAdapter extends RecyclerView.Adapter<PickImageAdapter.ViewHolder> {
