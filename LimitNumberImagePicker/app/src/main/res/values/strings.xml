@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LimitNumberImagePicker</string>
+    <string name="action_finish">finish</string>
 </resources>
